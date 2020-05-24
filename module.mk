@@ -1,3 +1,3 @@
-CFLAGS += -I$(TEMPLATE_DIR)
+CFLAGS += -I$(VECTOR_DIR)
 
-SRC += $(wildcard $(TEMPLATE_DIR)/*.c)
+SRC += $(wildcard $(VECTOR_DIR)/*.c)

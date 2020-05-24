@@ -6,7 +6,7 @@ ifndef $(TARGET_OS)
 TARGET_OS := linux
 endif
 ifndef $(TARGET_NAME)
-TARGET_NAME := template
+TARGET_NAME := vector
 endif
 
 # checking for env. variables
@@ -38,7 +38,7 @@ export ST_TARGET := lib$(TARGET_NAME)$(STO_END)
 export SO_TARGET := lib$(TARGET_NAME)$(SO_END)
 export TEST_TARGET := check
 
-MODULES := test-template
+MODULES := test-vector
 
 default: all
 all: $(TARGET_NAME) $(TEST_TARGET)
@@ -57,8 +57,8 @@ TLIBS :=
 TSRC :=
 
 # module code directories, required by submodules
-export TESTS_DIR=test-template
-export TEMPLATE_DIR=src
+export TESTS_DIR=test-vector
+export VECTOR_DIR=src
 
 # include the description for each module
 include module.mk

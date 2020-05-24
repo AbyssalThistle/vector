@@ -28,7 +28,7 @@
 *.out
 *.app
 check
-template
+vector
 
 # Libraries
 *.a
