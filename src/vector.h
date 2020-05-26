@@ -38,7 +38,7 @@ vec_at_##NAME(vec_##NAME *v, unsigned int pos) \
 	if(pos >= v->size) { \
 		fprintf(stderr, "%s can't hit pos %d, size is %d\n", \
 				__FUNCTION__, pos, v->size); \
-		return 0; \
+		return v->data[0]; \
 	} \
 	return v->data[pos]; \
 } \
@@ -78,7 +78,7 @@ vec_pop_##NAME(vec_##NAME *v) \
 { \
 	if(v->size == 0) { \
 		fprintf(stderr, "%s underflow\n", __FUNCTION__); \
-		return 0; \
+		return v->data[0]; \
 	} \
 	v->size--; \
 	return v->data[v->size]; \
