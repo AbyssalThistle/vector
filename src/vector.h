@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <malloc.h>
 #define VEC_DEFAULT_CAPACITY 4
 #define VEC_REALLOC reallocarray
 #define VEC_GENERATE_TYPE(TYPE) VEC_GENERATE_NAME(TYPE, TYPE) 
