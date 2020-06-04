@@ -8,11 +8,11 @@ typedef struct { \
 	int capacity; \
 	size_t data_size; \
 	TYPE *data; \
-} vec_##NAME; \
-vec_##NAME * \
-vec_init_w_cap_##NAME(unsigned int capacity) \
+} Vec##NAME; \
+Vec##NAME * \
+vecInitWCap##NAME(unsigned int capacity) \
 { \
-	vec_##NAME *v = malloc(sizeof(vec_##NAME)); \
+	Vec##NAME *v = malloc(sizeof(Vec##NAME)); \
 	if ( v == NULL ){ \
 		fprintf(stderr, "%s malloc of vec failed\n", __FUNCTION__); \
 		return NULL; \
@@ -27,13 +27,13 @@ vec_init_w_cap_##NAME(unsigned int capacity) \
 	v->data_size = sizeof(TYPE); \
 	return v; \
 } \
-vec_##NAME* \
-vec_init_##NAME() \
+Vec##NAME* \
+vecInit##NAME() \
 { \
-	return vec_init_w_cap_##NAME(VEC_DEFAULT_CAPACITY); \
+	return vecInitWCap##NAME(VEC_DEFAULT_CAPACITY); \
 } \
 TYPE \
-vec_at_##NAME(vec_##NAME *v, unsigned int pos) \
+vecAt##NAME(Vec##NAME *v, unsigned int pos) \
 { \
 	if(pos >= v->size) { \
 		fprintf(stderr, "%s can't hit pos %d, size is %d\n", \
@@ -43,7 +43,7 @@ vec_at_##NAME(vec_##NAME *v, unsigned int pos) \
 	return v->data[pos]; \
 } \
 TYPE * \
-vec_ptr_##NAME(vec_##NAME *v, unsigned int pos) \
+vecPtr##NAME(Vec##NAME *v, unsigned int pos) \
 { \
 	if(pos >= v->size) { \
 		fprintf(stderr, "%s can't hit pos %d, size is %d\n", \
@@ -53,7 +53,7 @@ vec_ptr_##NAME(vec_##NAME *v, unsigned int pos) \
 	return v->data + pos; \
 } \
 void \
-vec_push_##NAME(vec_##NAME *v, TYPE value) \
+vecPush##NAME(Vec##NAME *v, TYPE value) \
 { \
 	if(v->size == v->capacity) { \
 		void* tmp = VEC_REALLOC(v->data, v->capacity * 2, sizeof(TYPE)); \
@@ -65,7 +65,7 @@ vec_push_##NAME(vec_##NAME *v, TYPE value) \
 	v->size += 1; \
 } \
 void \
-vec_set_##NAME(vec_##NAME *v, unsigned int pos, TYPE value) \
+vecSet##NAME(Vec##NAME *v, unsigned int pos, TYPE value) \
 { \
 	if(pos >= v->size) { \
 		fprintf(stderr, "%s can't hit %d, size is %d", \
@@ -74,7 +74,7 @@ vec_set_##NAME(vec_##NAME *v, unsigned int pos, TYPE value) \
 	v->data[pos] = value; \
 } \
 TYPE \
-vec_pop_##NAME(vec_##NAME *v) \
+vecPop##NAME(Vec##NAME *v) \
 { \
 	if(v->size == 0) { \
 		fprintf(stderr, "%s underflow\n", __FUNCTION__); \
@@ -84,7 +84,7 @@ vec_pop_##NAME(vec_##NAME *v) \
 	return v->data[v->size]; \
 } \
 void \
-vec_free_##NAME(vec_##NAME *v)  \
+vecFree##NAME(Vec##NAME *v)  \
 { \
 	free(v->data); \
 	v->data = NULL; \
