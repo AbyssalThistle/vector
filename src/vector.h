@@ -18,7 +18,7 @@ vecInitWCap##NAME(unsigned int capacity) \
 		fprintf(stderr, "%s malloc of vec failed\n", __FUNCTION__); \
 		return NULL; \
 	} \
-	v->data = malloc(sizeof(TYPE)); \
+	v->data = malloc(sizeof(TYPE) * capacity); \
 	if ( v->data == NULL ){ \
 		fprintf(stderr, "%s malloc of vec data failed\n", __FUNCTION__); \
 		return NULL; \
