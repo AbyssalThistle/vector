@@ -4,7 +4,7 @@
 #define VEC_REALLOC reallocarray
 #define VEC_GENERATE_TYPE(TYPE) VEC_GENERATE_NAME(TYPE, TYPE) 
 #define VEC_GENERATE_NAME(TYPE, NAME) \
-typedef struct { \
+typedef struct _vec##NAME { \
 	int size; \
 	int capacity; \
 	size_t data_size; \
