@@ -30,14 +30,15 @@ do { \
 		break; \
 	} \
 	if(vec_size(v) == vec_cap(v)) { \
-		printf("%s vec is %p - ", #T, v); \
+		printf("%s vec is at %p, ", #T, v); \
 		v = _vec_head(v); \
-		printf("head is %p\n", v); \
-		v = realloc(v,(sizeof(T) * vec_cap(v) * VEC_SCALE_FAC) + (2 * sizeof(vecsize_t))); \
+		printf("head is %p, ", v); \
+		v = realloc(v, (sizeof(T) *((vecsize_t *)(v))[1] * VEC_SCALE_FAC) + (2 * sizeof(vecsize_t))); \
 		vec_null_check(v); \
+		((vecsize_t *)(v))[1] *= VEC_SCALE_FAC; \
 		v = (vecsize_t *)v + 2; \
+		printf("size is %u and cap is %u\n", vec_size(v), vec_cap(v)); \
 	} \
-	printf("biz "); \
 	v[vec_size(v)] = d; \
 	vec_size(v) += 1; \
 } while(0);
