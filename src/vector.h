@@ -46,7 +46,6 @@ do { \
 #define vec_free(v) \
 do { \
 	free(_vec_head(v)); \
-	_vec_head(v) = NULL; \
 	v = NULL; \
 } while(0);
 
