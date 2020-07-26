@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <assert.h>
-#include <stdio.h>
 
 #define VEC_INITIAL_CAP 4
 #define VEC_SCALE_FAC 2
@@ -21,23 +20,16 @@ do { \
 		vec_null_check(v); \
 		((vecsize_t *)(v))[0] = 1; \
 		((vecsize_t *)(v))[1] = VEC_INITIAL_CAP; \
-		printf("%s vec is at %p\n", #T, v); \
 		v = (vecsize_t *)v + 2; \
-		printf("head is at %p, ", ((vecsize_t *)(v)-2) ); \
-		printf("content is at %p, ", v); \
-		printf("size is %u and cap is %u\n", vec_size(v), vec_cap(v)); \
 		v[0] = d; \
 		break; \
 	} \
 	if(vec_size(v) == vec_cap(v)) { \
-		printf("%s vec is at %p, ", #T, v); \
 		v = _vec_head(v); \
-		printf("head is %p, ", v); \
 		v = realloc(v, (sizeof(T) *((vecsize_t *)(v))[1] * VEC_SCALE_FAC) + (2 * sizeof(vecsize_t))); \
 		vec_null_check(v); \
 		((vecsize_t *)(v))[1] *= VEC_SCALE_FAC; \
 		v = (vecsize_t *)v + 2; \
-		printf("size is %u and cap is %u\n", vec_size(v), vec_cap(v)); \
 	} \
 	v[vec_size(v)] = d; \
 	vec_size(v) += 1; \
