@@ -19,8 +19,8 @@ do { \
 	if (!v) { \
 		v = malloc((sizeof(T) * VEC_INITIAL_CAP) + (2 * sizeof(vecsize_t))); \
 		vec_null_check(v); \
-		v[0] = 1; \
-		v[1] = VEC_INITIAL_CAP; \
+		((vecsize_t *)(v))[0] = 1; \
+		((vecsize_t *)(v))[1] = VEC_INITIAL_CAP; \
 		printf("%s vec is at %p\n", #T, v); \
 		v = (vecsize_t *)v + 2; \
 		printf("head is at %p, ", ((vecsize_t *)(v)-2) ); \
