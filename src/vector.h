@@ -9,8 +9,8 @@
 typedef uint16_t vecsize_t;
 
 #define _vec_head(v) ((vecsize_t *)(v)-2)
-#define vec_size(v) _vec_head(v)[0]
-#define vec_cap(v) _vec_head(v)[1]
+#define vec_size(v) ((v == NULL) ? 0 : _vec_head(v)[0])
+#define vec_cap(v) ((v == NULL) ? 0 : _vec_head(v)[1])
 #define vec_null_check(v) assert(v)
 
 #define vec_push(T, v, d) \
@@ -32,7 +32,7 @@ do { \
 		v = (vecsize_t *)v + 2; \
 	} \
 	v[vec_size(v)] = d; \
-	vec_size(v) += 1; \
+	_vec_head(v)[0] += 1; \
 } while(0);
 
 #define vec_free(v) \
@@ -43,5 +43,5 @@ do { \
 
 #define vec_pop(v) \
 do { \
-	vec_size(v) -= 1; \
+	_vec_head(v)[0] -= 1; \
 } while(0);
