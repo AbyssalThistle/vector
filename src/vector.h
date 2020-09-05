@@ -3,10 +3,19 @@
 #include <stdint.h>
 #include <assert.h>
 
-#define VEC_INITIAL_CAP 4
-#define VEC_SCALE_FAC 2
+#ifndef VEC_INITIAL_CAP
+	#define VEC_INITIAL_CAP 4
+#endif
 
-typedef uint16_t vecsize_t;
+#ifndef VEC_SCALE_FAC
+	#define VEC_SCALE_FAC 2
+#endif
+
+#ifndef VEC_SIZE_TYPE
+	#define VEC_SIZE_TYPE uint16_t
+#endif
+
+typedef VEC_SIZE_TYPE vecsize_t;
 
 #define _vec_head(v) ((vecsize_t *)(v)-2)
 #define vec_size(v) ((v == NULL) ? 0 : _vec_head(v)[0])
