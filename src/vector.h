@@ -45,3 +45,7 @@ do { \
 do { \
 	_vec_head(v)[0] -= 1; \
 } while(0);
+
+#define vec_pop_at(v, i) \
+do { \
+} while(0);
