@@ -8,11 +8,12 @@ typedef `vecsize_t` to suit your project.
 ## usage
 Null pointers to a type are initilisation.
 
-push elements with `vec_push(T, v, d)` where:
+push elements with `VEC_PUSH(T, v, d)` where:
 * `T` is the type
 * `v` is the pointer to a variable of that type
 * `d` is the data
 
-single elements can be removed with `vec_pop(v)`.
+single elements can be removed with `VEC_POP(v)` or `VEC_POP_AT(v, n)`
+size and capacity macros are available with `VEC_SIZE(v)` and `VEC_CAP(v)`
 
 access/change elements with `[]`, as you would an array.
