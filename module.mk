@@ -1,3 +1,3 @@
-CFLAGS += -I$(VECTOR_DIR)
+INCLUDES += -I$(VECTOR_DIR)
 
 SRC += $(wildcard $(VECTOR_DIR)/*.c)
