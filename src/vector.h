@@ -53,6 +53,7 @@ do { \
 #define VEC_POP(v) \
 do { \
 	_VEC_HEAD(v)[0] -= 1; \
+	if(_VEC_HEAD(v)[0] == 0) { VEC_FREE(v) } \
 } while(0);
 
 #define VEC_POP_AT(v, at) \
@@ -61,4 +62,5 @@ do { \
 		v[i] = v[i+1]; \
 	} \
 	_VEC_HEAD(v)[0] -= 1; \
+	if(_VEC_HEAD(v)[0] == 0) { VEC_FREE(v) } \
 } while(0);
