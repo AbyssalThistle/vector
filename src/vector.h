@@ -22,6 +22,30 @@ typedef VEC_SIZE_TYPE vecsize_t;
 #define VEC_CAP(v) ((v == NULL) ? 0 : _VEC_HEAD(v)[1])
 #define VEC_NULL_CHECK(v) assert(v)
 
+#define VEC_PUSH_STR(v, d) \
+do { \
+	if (!v) { \
+		v = malloc((sizeof(char *) * VEC_INITIAL_CAP) + (2 * sizeof(vecsize_t))); \
+		VEC_NULL_CHECK(v); \
+		((vecsize_t *)(v))[0] = 1; \
+		((vecsize_t *)(v))[1] = VEC_INITIAL_CAP; \
+		v = (vecsize_t *)v + 2; \
+		v[0] = malloc(strlen(d) + 1); \
+		strncpy(v[0], d, strlen(d) + 1); \
+		break; \
+	} \
+	if(VEC_SIZE(v) == VEC_CAP(v)) { \
+		v = _VEC_HEAD(v); \
+		v = realloc(v, (sizeof(char *) *((vecsize_t *)(v))[1] * VEC_SCALE_FAC) + (2 * sizeof(vecsize_t))); \
+		VEC_NULL_CHECK(v); \
+		((vecsize_t *)(v))[1] *= VEC_SCALE_FAC; \
+		v = (vecsize_t *)v + 2; \
+	} \
+	v[VEC_SIZE(v)] = malloc(strlen(d) + 1); \
+	strncpy(v[VEC_SIZE(v)], d, strlen(d) + 1); \
+	_VEC_HEAD(v)[0] += 1; \
+} while(0);
+
 #define VEC_PUSH(T, v, d) \
 do { \
 	if (!v) { \
@@ -40,14 +64,31 @@ do { \
 		((vecsize_t *)(v))[1] *= VEC_SCALE_FAC; \
 		v = (vecsize_t *)v + 2; \
 	} \
-	v[VEC_SIZE(v)] = d; \
+	v[_VEC_HEAD(v)[0]] = d; \
 	_VEC_HEAD(v)[0] += 1; \
+} while(0);
+
+#define VEC_FREE_STR(v) \
+do { \
+	for(int i = 0; i < _VEC_HEAD(v)[0]; ++i) { \
+		free(v[i]); \
+		v[i] = NULL; \
+	} \
+	free(_VEC_HEAD(v)); \
+	v = NULL; \
 } while(0);
 
 #define VEC_FREE(v) \
 do { \
 	free(_VEC_HEAD(v)); \
 	v = NULL; \
+} while(0);
+
+#define VEC_POP_STR(v) \
+do { \
+	free(_VEC_HEAD(v)[0]); \
+	_VEC_HEAD(v)[0] -= 1; \
+	if(_VEC_HEAD(v)[0] == 0) { VEC_FREE(v) } \
 } while(0);
 
 #define VEC_POP(v) \
@@ -58,6 +99,30 @@ do { \
 
 #define VEC_POP_AT(v, at) \
 do { \
+	for(int i = at; i < _VEC_HEAD(v)[0] - 1; ++i) { \
+		v[i] = v[i+1]; \
+	} \
+	_VEC_HEAD(v)[0] -= 1; \
+	if(_VEC_HEAD(v)[0] == 0) { VEC_FREE(v) } \
+} while(0);
+
+#define VEC_POP_STR(v) \
+do { \
+	free(v[_VEC_HEAD(v)[0] - 1]); \
+	_VEC_HEAD(v)[0] -= 1; \
+	if(_VEC_HEAD(v)[0] == 0) { VEC_FREE(v) } \
+} while(0);
+
+#define VEC_SET_STR(v, at) \
+do { \
+	free(v[at]); \
+	v[at] = malloc(strlen(v)); \
+	strcpy(v[at], v); \
+} while(0);
+
+#define VEC_POP_STR_AT(v, at) \
+do { \
+	free(v[at]); \
 	for(int i = at; i < _VEC_HEAD(v)[0] - 1; ++i) { \
 		v[i] = v[i+1]; \
 	} \
