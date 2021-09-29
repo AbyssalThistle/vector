@@ -84,12 +84,6 @@ do { \
 	v = NULL; \
 } while(0);
 
-#define VEC_POP_STR(v) \
-do { \
-	free(_VEC_HEAD(v)[0]); \
-	_VEC_HEAD(v)[0] -= 1; \
-	if(_VEC_HEAD(v)[0] == 0) { VEC_FREE(v) } \
-} while(0);
 
 #define VEC_POP(v) \
 do { \
