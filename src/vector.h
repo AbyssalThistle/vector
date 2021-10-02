@@ -70,9 +70,9 @@ do { \
 
 #define VEC_FREE_STR(v) \
 do { \
-	for(int i = 0; i < _VEC_HEAD(v)[0]; ++i) { \
-		free(v[i]); \
-		v[i] = NULL; \
+	for(int _i = 0; _i < _VEC_HEAD(v)[0]; ++_i) { \
+		free(v[_i]); \
+		v[_i] = NULL; \
 	} \
 	free(_VEC_HEAD(v)); \
 	v = NULL; \
@@ -93,8 +93,8 @@ do { \
 
 #define VEC_POP_AT(v, at) \
 do { \
-	for(int i = at; i < _VEC_HEAD(v)[0] - 1; ++i) { \
-		v[i] = v[i+1]; \
+	for(int _i = at; _i < _VEC_HEAD(v)[0] - 1; ++_i) { \
+		v[_i] = v[_i+1]; \
 	} \
 	_VEC_HEAD(v)[0] -= 1; \
 	if(_VEC_HEAD(v)[0] == 0) { VEC_FREE(v) } \
@@ -117,8 +117,8 @@ do { \
 #define VEC_POP_STR_AT(v, at) \
 do { \
 	free(v[at]); \
-	for(int i = at; i < _VEC_HEAD(v)[0] - 1; ++i) { \
-		v[i] = v[i+1]; \
+	for(int _i = at; _i < _VEC_HEAD(v)[0] - 1; ++_i) { \
+		v[_i] = v[_i+1]; \
 	} \
 	_VEC_HEAD(v)[0] -= 1; \
 	if(_VEC_HEAD(v)[0] == 0) { VEC_FREE(v) } \
