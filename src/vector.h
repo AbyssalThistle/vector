@@ -1,4 +1,6 @@
 #pragma once
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wincompatible-pointer-types"
 #include <stdlib.h>
 #include <stdint.h>
 #include <assert.h>
@@ -123,3 +125,5 @@ do { \
 	_VEC_HEAD(v)[0] -= 1; \
 	if(_VEC_HEAD(v)[0] == 0) { VEC_FREE(v) } \
 } while(0);
+
+#pragma GCC diagnostic pop
