@@ -48,6 +48,34 @@ do { \
 	_VEC_HEAD(v)[0] += 1; \
 } while(0);
 
+#define VEC_PUSH_NSTR(v, d, n) \
+do { \
+	unsigned int len = n; \
+	if (d[n] != '\0') { len += 1; } \
+	if (!v) { \
+		v = malloc((sizeof(char *) * VEC_INITIAL_CAP) + (2 * sizeof(vecsize_t))); \
+		VEC_NULL_CHECK(v); \
+		((vecsize_t *)(v))[0] = 1; \
+		((vecsize_t *)(v))[1] = VEC_INITIAL_CAP; \
+		v = (vecsize_t *)v + 2; \
+		v[0] = malloc(len); \
+		strncpy(v[0], d, n); \
+		v[len] = '\0'; \
+		break; \
+	} \
+	if(VEC_SIZE(v) == VEC_CAP(v)) { \
+		v = _VEC_HEAD(v); \
+		v = realloc(v, (sizeof(char *) *((vecsize_t *)(v))[1] * VEC_SCALE_FAC) + (2 * sizeof(vecsize_t))); \
+		VEC_NULL_CHECK(v); \
+		((vecsize_t *)(v))[1] *= VEC_SCALE_FAC; \
+		v = (vecsize_t *)v + 2; \
+	} \
+	v[VEC_SIZE(v)] = malloc(len); \
+	strncpy(v[VEC_SIZE(v)], d, n); \
+	v[len] = '\0'; \
+	_VEC_HEAD(v)[0] += 1; \
+} while(0);
+
 #define VEC_PUSH(T, v, d) \
 do { \
 	if (!v) { \
