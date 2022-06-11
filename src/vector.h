@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <assert.h>
+#include <string.h>
 
 #ifndef VEC_INITIAL_CAP
 	#define VEC_INITIAL_CAP 4
